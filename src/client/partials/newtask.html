@@ -1,0 +1,53 @@
+<md-dialog layout="column" ng-controller="taskController" flex="75" aria-label="Add new task" ng-cloak>
+
+  <form ng-submit="addTask()">
+    <div layout="row" layout-fill style="min-height: 224px;">
+      <div flex>
+
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <h2>Add a new task</h2>
+            <span flex></span>
+            <md-button aria-label="Cancel" class="md-icon-button" ng-click="cancel()">
+              <ng-md-icon icon="close" style="fill: #FFF"></ng-md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+
+        <md-dialog-content layout="column">
+
+          <div layout layout-align="center center">
+            <md-input-container flex="75">
+              <label>Title</label>
+              <input ng-model="taskForm.title" type="text">
+            </md-input-container>
+            <md-datepicker flex ng-model="taskForm.deadline" md-placeholder="Deadline"></md-datepicker>
+          </div>
+
+          <md-input-container>
+            <label>Description</label>
+              <textarea ng-model="taskForm.description" columns="1" md-maxlength="200" rows="4"></textarea>
+          </md-input-container>
+
+
+          <div layout="row" layout-align="center center">
+            <md-input-container flex>
+              <label>Priority</label>
+              <md-select ng-model="taskForm.priority">
+                <md-option value="1">Low</md-option>
+                <md-option value="2">Medium</md-option>
+                <md-option value="3">High</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+
+          <md-dialog-actions layout layout-align="space-around center">
+            <md-button style="color: #FFF;" flex="45" ng-click="cancel()">Cancel</md-button>
+            <md-button style="color: #FFF;" flex="45" type="submit">Add Task</md-button>
+          </md-dialog-actions>
+
+        </md-dialog-content>
+      </div>
+    </div>
+  </form>
+</md-dialog>

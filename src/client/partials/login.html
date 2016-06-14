@@ -1,0 +1,44 @@
+<md-dialog layout="column" ng-controller="loginController" flex="30" aria-label="Log in" ng-cloak>
+
+  <form ng-submit="login()">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Log in</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <ng-md-icon icon="close" style="fill: #FFF"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content layout-align="column">
+
+      <md-input-container>
+        <!-- <ng-md-icon icon="person" style="fill: #FFF"></ng-md-icon> -->
+        <label>User Name</label>
+        <input class="md-warn" type="text" name="username" ng-model="loginForm.username" required>
+        <div ng-messages="loginForm.username.$error" ng-show="loginForm.username.$dirty">
+          <div ng-message="required">This is required!</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container class="md-block">
+        <label>Password</label>
+        <input type="password" name="password" ng-model="loginForm.password" required md-minlength="6">
+        <div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$dirty">
+          <div ng-message="required">This is required!</div>
+          <div ng-message="md-minlength">That's too short!</div>
+        </div>
+      </md-input-container>
+
+    <md-dialog-actions layout layout-align="space-around center">
+      <md-button style="color: #FFF;" flex="45" type="button" ng-click="cancel()">Cancel</md-button>
+      <md-button style="color: #FFF;" flex="45" type="submit">Log in</md-button>
+    </md-dialog-actions>
+
+  </md-dialog-content>
+
+  </form>
+
+</md-dialog>

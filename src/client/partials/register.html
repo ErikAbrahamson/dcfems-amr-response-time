@@ -1,0 +1,58 @@
+<md-dialog layout="column" ng-controller="registerController" flex="30" aria-label="Log in" ng-cloak>
+
+  <form ng-submit="register()">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Register</h2>
+        <span flex></span>
+        <md-button aria-label="Cancel" class="md-icon-button" ng-click="cancel()">
+          <ng-md-icon icon="close" style="fill: #FFF"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <md-input-container>
+        <label>User Name</label>
+        <input aria-label="User Name" type="text" name="username" ng-model="registerForm.username" required>
+        <div ng-messages="registerForm.username.$error" ng-show="registerForm.username.$dirty">
+          <div ng-message="required">This is required!</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Password</label>
+        <input aria-label="Password" type="password" name="password" ng-model="registerForm.password" required md-minlength="6">
+        <div ng-messages="registerForm.password.$error" ng-show="registerForm.password.$dirty">
+          <div ng-message="required">This is required!</div>
+          <div ng-message="md-minlength">That's too short!</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Email</label>
+        <input aria-label="Email" type="email" name="email" ng-model="registerForm.email" required>
+        <div ng-messages="registerForm.email.$error" ng-show="registerForm.email.$dirty">
+          <div ng-message="required">This is required!</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Phone Number</label>
+        <input aria-label="Phone Number" type="tel" name="phone" ng-model="registerForm.phone" required>
+        <div ng-messages="registerForm.phone.$error" ng-show="registerForm.phone.$dirty">
+          <div ng-message="required">This is required!</div>
+        </div>
+      </md-input-container>
+
+    <md-dialog-actions layout layout-align="space-around center">
+      <md-button style="color: #FFF;" flex="45" ng-click="cancel()">Cancel</md-button>
+      <md-button style="color: #FFF;" flex="45" type="submit">Register</md-button>
+    </md-dialog-actions>
+
+    </md-dialog-content>
+
+  </form>
+
+</md-dialog>
