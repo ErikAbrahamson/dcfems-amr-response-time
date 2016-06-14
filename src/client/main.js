@@ -1,9 +1,11 @@
-var app = angular.module('StarterApp', ['ngMaterial', 'ngMdIcons']);
+var app = angular.module('myApp', ['ngMaterial', 'ngMdIcons', 'ngRoute', 'ngMessages', 'ngAria']);
 
-app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog){
-  $scope.toggleSidenav = function(menuId) {
-    $mdSidenav(menuId).toggle();
-  };
+app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog) {
+
+    $scope.toggleSidenav = function(menuId) {
+        $mdSidenav(menuId).toggle();
+    };
+
  	$scope.menu = [
     {
       link : '',
@@ -115,7 +117,7 @@ function DialogController($scope, $mdDialog) {
   $scope.answer = function(answer) {
     $mdDialog.hide(answer);
   };
-};
+}
 
 app.directive('userAvatar', function() {
   return {
@@ -124,19 +126,43 @@ app.directive('userAvatar', function() {
   };
 });
 
-app.config(function($mdThemingProvider) {
-  var customBlueMap = 		$mdThemingProvider.extendPalette('light-blue', {
-    'contrastDefaultColor': 'light',
-    'contrastDarkColors': ['50'],
-    '50': 'ffffff'
-  });
-  $mdThemingProvider.definePalette('customBlue', customBlueMap);
-  $mdThemingProvider.theme('default')
-    .primaryPalette('customBlue', {
-      'default': '500',
-      'hue-1': '50'
-    })
-    .accentPalette('pink');
-  $mdThemingProvider.theme('input', 'default')
-        .primaryPalette('grey')
+app.config(function($mdThemingProvider, $routeProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
+    var customBlueMap = $mdThemingProvider.extendPalette('light-blue', {
+        'contrastDefaultColor': 'light',
+        'contrastDarkColors': ['50'],
+        '50': 'ffffff'
+    });
+
+    $mdThemingProvider.definePalette('customBlue', customBlueMap);
+    $mdThemingProvider.theme('default')
+        .primaryPalette('customBlue', {
+            'default': '500',
+            'hue-1': '50'
+        })
+        .accentPalette('pink');
+
+    $mdThemingProvider.theme('input', 'default')
+        .primaryPalette('grey');
+
+    // control views
+    $routeProvider
+        .when('/login', {
+            templateUrl: 'partials/login.html',
+            controller: 'loginController',
+            access: { restricted: false }
+        })
+        .otherwise({
+            redirectTo: '/'
+        });
+
 });
+
+// app.run(function($rootScope, $location, $route, AuthService) {
+//     $rootScope.$on('$routeChangeStart', function(event, next, current) {
+//         if (next.access.restricted && !AuthService.getUserStatus()) {
+//             $location.path('/');
+//             $route.reload();
+//         }
+//     })
+// });

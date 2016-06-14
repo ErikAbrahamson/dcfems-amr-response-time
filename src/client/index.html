@@ -1,9 +1,9 @@
-<html lang="en" ng-app="StarterApp">
+<html lang="en" ng-app="myApp">
 
     <head>
         <base href="/">
         <meta charset="utf-8">
-        <title>Capstone</title>
+        <title>AMR Request Response Time</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
@@ -13,8 +13,50 @@
     </head>
 
     <body layout="row" ng-controller="AppCtrl">
+
+        <div ng-show="!currentUser" flex layout="row" layout-align="center center">
+            <md-content flex="50" class="md-whiteframe-6dp" layout="column">
+                <md-toolbar layout="column" layout-align="center center" class="md-hue-2"><span>Test</span></md-toolbar>
+                <md-card md-theme="default" aria-label="">
+                    <div layout="row" layout-padding layout-align="space-around center">
+                        <md-card-title-media flex="50">
+                            <div max-height="50%" class="md-media-lg card-media">
+                                <img max-height="50%" src="./public/img/amr_logo.jpg" alt="AMR">
+                            </div>
+                        </md-card-title-media>
+                        <md-card-title-media flex="50">
+                            <div max-height="50%" class="md-media-lg card-media">
+                                <img max-height="50%" src="./public/img/dcfems_logo.jpg" alt="DCFEMS">
+                            </div>
+                        </md-card-title-media>
+                    </div>
+                    <md-input-container layout-padding>
+                        <div layout="row" layout-align="center center">
+                            <h1 md-display="2">Welcome! Please Log in</h1>
+                        </div>
+                        <md-divider></md-divider>
+                        <span flex></span>
+                        <form name="userForm">
+                            <md-input-container flex>
+                                <label>Username</label>
+                                <input ng-model="user.address">
+                            </md-input-container>
+                            <md-input-container flex>
+                                <label>Password</label>
+                                <input ng-model="user.biography">
+                            </md-input-container>
+                        </form>
+                    </md-input-container>
+                    <div class="md-actions" layout="row" layout-padding layout-align="space-between center">
+                        <md-button class="md-raised md-hue-1" ng-click="answer(\'not useful\')"> LOST PASSWORD </md-button>
+                        <md-button class="md-raised md-primary" ng-click="answer(\'useful\')" class="md-primary"> LOG IN </md-button>
+                    </div>
+                </md-card>
+            </md-content>
+        </div>
+
         <!-- sidenav main content -->
-        <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-sidenav ng-show="currentUser" layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
             <md-toolbar class="md-tall md-hue-2">
                 <span flex></span>
                 <div layout="column" class="md-toolbar-tools-bottom inset">
@@ -53,7 +95,7 @@
             </md-list>
         </md-sidenav>
         <!-- main view content -->
-        <div layout="column" class="relative" layout-fill role="main">
+        <div layout="column" class="relative" layout-fill role="main" ng-show="currentUser">
             <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
                 <ng-md-icon icon="add"></ng-md-icon>
             </md-button>
@@ -184,6 +226,8 @@
                </ui-view>
            </md-content>
        </div>
+
+
        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular.min.js"></script>
        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-route.min.js"></script>
        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script>
