@@ -2,7 +2,7 @@ var express = require('express'),
     router = express.Router(),
     passport = require('passport'),
     User = require('../models/user.js'),
-    Task = require('../models/incident.js'),
+    Incident = require('../models/incident.js'),
     mongoose = require('mongoose-q')(require('mongoose'), { spread: true });
 
 

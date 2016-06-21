@@ -5,22 +5,22 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../../src/server/app.js');
 var mongoose = require('mongoose-q')(require('mongoose'));
-var Task = require('../../src/server/models/task.js');
+var Incident = require('../../src/server/models/incident.js');
 var User = require('../../src/server/models/user.js');
 
 var should = chai.should();
 chai.use(chaiHttp);
 
-describe('User Tasks', function() {
+describe('User Incidents', function() {
 
   beforeEach(function(done) {
 
-    Task.collection.drop();
+    Incident.collection.drop();
     User.collection.drop();
     var date = new Date();
     date = date.setDate(15);
 
-    var newTask = new Task({
+    var newIncident = new Incident({
       title: 'Finish Tests',
       description: 'I\'d better finish these tests',
       deadline: date,
@@ -32,13 +32,13 @@ describe('User Tasks', function() {
         text_message: false
       }
     });
-    newTask.save();
+    newIncident.save();
     var newUser = new User({
       username: 'test@test.com',
       password: 'test',
       email: 'test@test.com',
       phone: '123-456-7890',
-      tasks:[newTask]
+      incidents:[newIncident]
     });
 
     newUser.save();
@@ -48,17 +48,17 @@ describe('User Tasks', function() {
 
   afterEach(function(done) {
     User.collection.drop();
-    Task.collection.drop();
+    Incident.collection.drop();
     done();
   });
 
-  it('Should return all tasks for a user', function(done) {
+  it('Should return all incidents for a user', function(done) {
     var date = new Date();
     date = date.setDate(15);
     chai.request(server).get('/users/')
       .end(function(err, res) {
         chai.request(server)
-          .get('/user/' + res.body[0]._id + '/tasks/')
+          .get('/user/' + res.body[0]._id + '/incidents/')
           .end(function(error, res) {
             res.should.have.status(200);
             res.body[0].should.be.a('object');
@@ -78,11 +78,11 @@ describe('User Tasks', function() {
       });
   });
 
-  it('Should return a single task from a user', function(done) {
+  it('Should return a single incident from a user', function(done) {
     chai.request(server)
       .get('/users/').end(function(error, res) {
         chai.request(server)
-          .get('/user/' + res.body[0]._id + '/task/' + res.body[0].tasks[0])
+          .get('/user/' + res.body[0]._id + '/incident/' + res.body[0].incidents[0])
           .end(function(error, res) {
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -102,12 +102,12 @@ describe('User Tasks', function() {
       });
   });
 
-  it('Should post a new task into the user\'s task list', function(done) {
+  it('Should post a new incident into the user\'s incident list', function(done) {
     var date = new Date();
     chai.request(server)
       .get('/users/').end(function(error, res) {
         chai.request(server)
-          .post('/user/' + res.body[0]._id + '/task/')
+          .post('/user/' + res.body[0]._id + '/incident/')
           .send({
             'title': 'Finish Tests',
             'description': 'I\'d better finish these tests',
@@ -121,17 +121,17 @@ describe('User Tasks', function() {
           })
           .end(function(err, res) {
             res.should.have.status(200);
-            res.body.tasks.length.should.equal(2);
+            res.body.incidents.length.should.equal(2);
             done();
           });
       });
   });
 
-  it('Should allow a user to edit tasks', function(done) {
+  it('Should allow a user to edit incidents', function(done) {
     chai.request(server)
       .get('/users/').end(function(err, res) {
         chai.request(server)
-          .put('/user/' + res.body[0]._id + '/task/' + res.body[0].tasks[0])
+          .put('/user/' + res.body[0]._id + '/incident/' + res.body[0].incidents[0])
           .send({
             'description': 'Finished!',
             'complete': true,
@@ -146,11 +146,11 @@ describe('User Tasks', function() {
       });
   });
 
-  it('Should allow a user to remove a task', function(done) {
+  it('Should allow a user to remove a incident', function(done) {
     chai.request(server)
       .get('/users/').end(function(err, res) {
         chai.request(server)
-          .delete('/user/' + res.body[0]._id + '/task/' + res.body[0].tasks[0])
+          .delete('/user/' + res.body[0]._id + '/incident/' + res.body[0].incidents[0])
           .end(function(error, res) {
             res.should.have.status(200);
             res.body.should.be.a('object');

@@ -18,7 +18,7 @@ var app = express();
 
 var auth = require('./routes/auth.js');
 var users = require('./routes/users.js');
-var tasks = require('./routes/tasks.js');
+var incidents = require('./routes/incidents.js');
 
 // define middleware
 app.use(express.static(path.join(__dirname, '../client')));
@@ -46,7 +46,7 @@ mongoose.connect(config.MONGO_URI[process.env.NODE_ENV]);
 // routes
 app.use('/user/', auth);
 app.use('/', users);
-app.use('/', tasks);
+app.use('/', incidents);
 
 // serve client-side Angular
 app.get('/', function(req, res) {

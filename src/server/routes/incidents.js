@@ -2,7 +2,7 @@ var express = require('express'),
     router = express.Router(),
     User = require('../models/user.js'),
     passport = require('passport'),
-    Task = require('../models/incident.js'),
+    Incident = require('../models/incident.js'),
     mongoose = require('mongoose-q')(require('mongoose'), { spread: true });
 
 router.get('/user/:id/incidents', function(req, res, next) {
@@ -13,8 +13,8 @@ router.get('/user/:id/incidents', function(req, res, next) {
   });
 });
 
-router.post('/user/:id/task', function(req, res, next) {
-  var newTask = new Task({
+router.post('/user/:id/incident', function(req, res, next) {
+  var newIncident = new Incident({
     title: req.body.title,
     description: req.body.description,
     deadline: req.body.deadline,
@@ -25,9 +25,9 @@ router.post('/user/:id/task', function(req, res, next) {
       text_message: req.body.text_message
     }
   });
-    newTask.saveQ()
+    newIncident.saveQ()
       .then(function(result) {
-        var update = { $push : {incidents : newTask }}, options = {
+        var update = { $push : {incidents : newIncident }}, options = {
           new: true,
           upsert: true
         }, id = req.params.id;
@@ -40,11 +40,11 @@ router.post('/user/:id/task', function(req, res, next) {
       .done();
 });
 
-router.get('/user/:userid/task/:taskid', function(req, res, next) {
-  var user = req.params.userid, task = req.params.taskid;
+router.get('/user/:userid/incident/:incidentid', function(req, res, next) {
+  var user = req.params.userid, incident = req.params.incidentid;
   User.findByIdQ(user)
     .then(function(result) {
-      Task.findByIdQ(task)
+      Incident.findByIdQ(incident)
         .then(function(result) { res.json(result); });
     })
     .catch(function(error) {
@@ -52,12 +52,12 @@ router.get('/user/:userid/task/:taskid', function(req, res, next) {
     }).done();
 });
 
-router.put('/user/:userid/task/:taskid', function(req, res, next) {
-  var user = req.params.userid, task = req.params.taskid,
+router.put('/user/:userid/incident/:incidentid', function(req, res, next) {
+  var user = req.params.userid, incident = req.params.incidentid,
     options = { new: true };
   User.findByIdQ(user)
     .then(function(result) {
-      Task.findOneAndUpdateQ(task, req.body, options)
+      Incident.findOneAndUpdateQ(incident, req.body, options)
         .then(function(result) { res.json(result); });
     })
     .catch(function(error) {
@@ -65,11 +65,11 @@ router.put('/user/:userid/task/:taskid', function(req, res, next) {
     }).done();
 });
 
-router.delete('/user/:userid/task/:taskid', function(req, res, next) {
-  var user = req.params.userid, task = req.params.taskid;
+router.delete('/user/:userid/incident/:incidentid', function(req, res, next) {
+  var user = req.params.userid, incident = req.params.incidentid;
   User.findByIdQ(user)
     .then(function(result) {
-      Task.findByIdAndRemoveQ(task)
+      Incident.findByIdAndRemoveQ(incident)
         .then(function(result) { res.json(result); });
     })
     .catch(function(error) {

@@ -4,7 +4,7 @@ var mocha = require('mocha');
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../../src/server/app.js');
-var Task = require('../../src/server/models/task.js');
+var Incident = require('../../src/server/models/incident.js');
 var User = require('../../src/server/models/user.js');
 
 var should = chai.should();
@@ -14,12 +14,12 @@ describe('Userbase', function() {
 
   beforeEach(function(done) {
 
-    Task.collection.drop();
+    Incident.collection.drop();
     User.collection.drop();
     var date = new Date();
     date.setDate(date.getDate() + 10);
 
-    var newTask = new Task({
+    var newIncident = new Incident({
       title: 'Finish Tests',
       description: 'I\'d better finish these tests',
       deadline: date,
@@ -31,7 +31,7 @@ describe('Userbase', function() {
         text_message: false
       }
     });
-    var secondTask = new Task({
+    var secondIncident = new Incident({
       title: 'Seriously, finish tests',
       description: 'I\'d better finish these damn tests',
       deadline: date,
@@ -48,18 +48,18 @@ describe('Userbase', function() {
       password: 'test',
       email: 'test@test.com',
       phone: '123-456-7890',
-      tasks:[newTask, secondTask]
+      incidents:[newIncident, secondIncident]
     });
     var anotherUser = new User({
       username: 'Rick',
       password: '12345',
       email: 'test@test.com',
       phone: '123-456-7890',
-      tasks: []
+      incidents: []
     });
 
-    newTask.save();
-    secondTask.save();
+    newIncident.save();
+    secondIncident.save();
     newUser.save();
     anotherUser.save();
     done();
@@ -68,36 +68,36 @@ describe('Userbase', function() {
 
   afterEach(function(done) {
     User.collection.drop();
-    Task.collection.drop();
+    Incident.collection.drop();
     done();
   });
 
-  it('Should return all users and associated tasks', function(done) {
+  it('Should return all users and associated incidents', function(done) {
     chai.request(server)
       .get('/users/')
       .end(function(error, res) {
         res.should.have.status(200);
         res.body[0].should.have.property('_id');
-        res.body[0].tasks.length.should.equal(2);
+        res.body[0].incidents.length.should.equal(2);
         res.body[0].should.have.property('username');
-        res.body[0].should.have.property('tasks');
+        res.body[0].should.have.property('incidents');
         res.body[0].should.have.property('_id');
-        res.body[0].tasks.length.should.equal(2);
+        res.body[0].incidents.length.should.equal(2);
         res.body[1].should.have.property('username');
-        res.body[1].should.have.property('tasks');
+        res.body[1].should.have.property('incidents');
         res.body[1].should.have.property('_id');
-        res.body[1].tasks.length.should.equal(0);
+        res.body[1].incidents.length.should.equal(0);
         done();
       });
   });
 
-  it('Should return a single user and associated tasks', function(done) {
+  it('Should return a single user and associated incidents', function(done) {
     var newUser = new User({
       username: 'test@test.com',
       password: 'test',
       phone: '123-456-7890',
       twitter: '@user',
-      tasks:[]
+      incidents:[]
     });
       newUser.save(function(error, response) {
         chai.request(server)
@@ -108,11 +108,11 @@ describe('Userbase', function() {
             res.body.should.have.property('username');
             res.body.should.have.property('password');
             res.body.should.have.property('phone');
-            res.body.should.have.property('tasks');
+            res.body.should.have.property('incidents');
             res.body.username.should.equal('test@test.com');
             res.body.password.should.equal('test');
             res.body.phone.should.equal('123-456-7890');
-            res.body.tasks.length.should.equal(0);
+            res.body.incidents.length.should.equal(0);
             done();
           });
       });
@@ -162,7 +162,7 @@ describe('Userbase', function() {
             res.body.should.have.property('username');
             res.body.should.have.property('password');
             res.body.should.have.property('phone');
-            res.body.should.have.property('tasks');
+            res.body.should.have.property('incidents');
             res.body.should.have.property('email');
             res.body.username.should.equal('Updated!');
             done();
@@ -201,7 +201,7 @@ describe('Userbase', function() {
             res.body.should.have.property('username');
             res.body.should.have.property('password');
             res.body.should.have.property('phone');
-            res.body.should.have.property('tasks');
+            res.body.should.have.property('incidents');
             res.body.should.have.property('email');
             done();
          });
