@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     passportLocalMongoose = require('passport-local-mongoose');
 
-var Task = new Schema({
+var Incident = new Schema({
   title: { type: String },
   description: { type: String },
   deadline: { type: Date },
@@ -14,5 +14,5 @@ var Task = new Schema({
   }
 });
 
-Task.plugin(passportLocalMongoose);
-module.exports = mongoose.model('tasks', Task);
+Incident.plugin(passportLocalMongoose);
+module.exports = mongoose.model('incidents', Incident);

@@ -1,6 +1,6 @@
 var mongoURI = {
-  development: 'mongodb://localhost/capstone',
-  test: 'mongodb://localhost/capstone-test',
+  development: 'mongodb://localhost/dcgov',
+  test: 'mongodb://localhost/dcgov-test',
   production: process.env.MONGOLAB_URI
 };
 

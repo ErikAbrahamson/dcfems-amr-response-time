@@ -10,6 +10,7 @@ var express = require('express'),
     passport = require('passport'),
     session = require('express-session'),
     config = require('./_config.js'),
+    // favicon = require('serve-favicon'),
     localStrategy = require('passport-local').Strategy;
 
 var User = require('./models/user.js');
@@ -21,6 +22,7 @@ var tasks = require('./routes/tasks.js');
 
 // define middleware
 app.use(express.static(path.join(__dirname, '../client')));
+// app.use(favicon(__dirname + '../client/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

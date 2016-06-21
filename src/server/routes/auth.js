@@ -2,7 +2,7 @@ var express = require('express'),
     router = express.Router(),
     passport = require('passport'),
     User = require('../models/user.js'),
-    Task = require('../models/task.js'),
+    Task = require('../models/incident.js'),
     mongoose = require('mongoose-q')(require('mongoose'), { spread: true });
 
 
@@ -28,7 +28,7 @@ router.post('/login', function(req, res, next) {
         return res.status(500).json({error: 'Could not log in user'});
       }
       User.findById(user._id)
-        .populate('tasks').exec(function(error, response) {
+        .populate('incidents').exec(function(error, response) {
         if (error) res.json(error);
         else res.status(200).json(response);
       });

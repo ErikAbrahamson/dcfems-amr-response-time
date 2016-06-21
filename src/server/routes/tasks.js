@@ -2,14 +2,14 @@ var express = require('express'),
     router = express.Router(),
     User = require('../models/user.js'),
     passport = require('passport'),
-    Task = require('../models/task.js'),
+    Task = require('../models/incident.js'),
     mongoose = require('mongoose-q')(require('mongoose'), { spread: true });
 
-router.get('/user/:id/tasks', function(req, res, next) {
+router.get('/user/:id/incidents', function(req, res, next) {
   User.findById(req.params.id)
-    .populate('tasks').exec(function(error, user) {
+    .populate('incidents').exec(function(error, user) {
     if (error) res.json(error);
-    else res.json(user.tasks);
+    else res.json(user.incidents);
   });
 });
 
@@ -27,7 +27,7 @@ router.post('/user/:id/task', function(req, res, next) {
   });
     newTask.saveQ()
       .then(function(result) {
-        var update = { $push : {tasks : newTask }}, options = {
+        var update = { $push : {incidents : newTask }}, options = {
           new: true,
           upsert: true
         }, id = req.params.id;

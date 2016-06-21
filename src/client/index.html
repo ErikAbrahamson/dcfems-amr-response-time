@@ -12,21 +12,21 @@
         <link rel="stylesheet" href="./public/css/main.css">
     </head>
 
-    <body layout="row" ng-controller="AppCtrl">
+    <body layout="row" ng-controller="AppCtrl" ng-cloak>
 
         <div ng-show="!currentUser" flex layout="row" layout-align="center center">
             <md-content flex="50" class="md-whiteframe-6dp" layout="column">
                 <md-toolbar layout="column" layout-align="center center" class="md-hue-2"><span>Test</span></md-toolbar>
                 <md-card md-theme="default" aria-label="">
                     <div layout="row" layout-padding layout-align="space-around center">
-                        <md-card-title-media flex="50">
-                            <div max-height="50%" class="md-media-lg card-media">
-                                <img max-height="50%" src="./public/img/amr_logo.jpg" alt="AMR">
+                        <md-card-title-media layout-align="center center" flex="50">
+                            <div layout="row" layout-padding layout-align="center center" class="md-media-lg card-media">
+                                <img style="max-height: 100px; width: auto;" src="./public/img/amr_logo.jpg" alt="AMR">
                             </div>
                         </md-card-title-media>
-                        <md-card-title-media flex="50">
-                            <div max-height="50%" class="md-media-lg card-media">
-                                <img max-height="50%" src="./public/img/dcfems_logo.jpg" alt="DCFEMS">
+                        <md-card-title-media layout-align="center center" flex="50">
+                            <div layout="row" layout-padding layout-align="center center" class="md-media-lg card-media">
+                                <img style="max-height: 100px; width: auto;" src="./public/img/dcfems_logo.jpg" alt="DCFEMS">
                             </div>
                         </md-card-title-media>
                     </div>
@@ -36,20 +36,20 @@
                         </div>
                         <md-divider></md-divider>
                         <span flex></span>
-                        <form name="userForm">
+                        <form ng-submit="login()" name="userForm">
                             <md-input-container flex>
                                 <label>Username</label>
-                                <input ng-model="user.address">
+                                <input name="username" ng-model="loginForm.username">
                             </md-input-container>
                             <md-input-container flex>
                                 <label>Password</label>
-                                <input ng-model="user.biography">
+                                <input name="password" ng-model="loginForm.password">
                             </md-input-container>
                         </form>
                     </md-input-container>
                     <div class="md-actions" layout="row" layout-padding layout-align="space-between center">
-                        <md-button class="md-raised md-hue-1" ng-click="answer(\'not useful\')"> LOST PASSWORD </md-button>
-                        <md-button class="md-raised md-primary" ng-click="answer(\'useful\')" class="md-primary"> LOG IN </md-button>
+                        <md-button class="md-raised md-hue-1" type="button"> LOST PASSWORD </md-button>
+                        <md-button class="md-raised md-primary" type="submit" class="md-primary"> LOG IN </md-button>
                     </div>
                 </md-card>
             </md-content>

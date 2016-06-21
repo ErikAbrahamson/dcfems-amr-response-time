@@ -7,7 +7,7 @@ var User = new Schema({
   password: { type: String },
   email: { type: String },
   phone: { type: String },
-  tasks: [{type: Schema.Types.ObjectId, ref: 'tasks'}]
+  incidents: [{type: Schema.Types.ObjectId, ref: 'incidents'}]
 });
 
 
